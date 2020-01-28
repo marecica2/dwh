@@ -7,33 +7,44 @@ services:
 env:
   global:
     - SHA=$(git rev-parse HEAD)
+    # deactivate prompts in gcloud
     - CLOUDSDK_CORE_DISABLE_PROMPTS=1
 cache:
   directories:
     - "$HOME/.cache"
+before_install:
+  # decode encrypted service account key
+  - openssl aes-256-cbc -K $encrypted_0c35eebf403c_key -iv $encrypted_0c35eebf403c_iv -in service-account.json.enc -out service-account.json -d
+  # download gcloud
+  - curl https://sdk.cloud.google.com | bash > /dev/null;
+  # setup gcloud
+  - source $HOME/google-cloud-sdk/path.bash.inc
+  # install kubectl to travis
+  - gcloud components update kubectl
+  # login
+  - gcloud auth activate-service-account --key-file service-account.json
+  # set project
+  - gcloud config set project dwh-project-266108
+  # set region
+  - gcloud config set compute/zone europe-west2-a
+  # set cluster
+  - gcloud container clusters get-credentials dwh-cluster-1
 install:
+  # load ci env variables
   - export $(cat .env.ci | xargs)
+  # setup database and schema
   - psql -c 'drop database if exists dwhtest;' -U postgres
   - psql -c 'create database dwhtest;' -U postgres
+  # build java packages
   - mvn -ntp clean package -DskipTests=true -Dmaven.javadoc.skip=true -B -V
-  - pwd
-  - ls -la
+  # run migrations on test database
   - java -Dspring.profiles.active=integration-test -jar ./migrator/target/application.jar
-  - echo "aaa"
 script:
-  - echo "bbb"
-  - mvn -ntp test
-#deploy:
-#  provider: script
-#  script: bash ./deploy.sh
-#  skip_cleanup: true
-#  on:
-#    branch: develop
-#    tags: true
-
-#deploy:
-#  provider: script
-#  script: bash ./deploy.sh
-#  on:
-#    branch: master
+  - mvn -ntp install
+deploy:
+  provider: script
+  script: bash ./deploy.sh
+  skip_cleanup: true
+  on:
+    branch: develop
 
