@@ -94,7 +94,7 @@ public class QueryGenerator {
             .stream()
             .map(i -> i.entrySet()
                 .stream()
-                .filter(Objects::nonNull)
+                .filter(e -> e.getValue() != null)
                 .collect(Collectors.toMap(
                     e -> caseBackConversion.apply(e.getKey()),
                     e -> e.getValue())))

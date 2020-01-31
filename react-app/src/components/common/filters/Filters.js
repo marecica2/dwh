@@ -23,9 +23,9 @@ const useStyles = makeStyles(theme => ({
 function getStyles(item, property, theme) {
   return {
     fontWeight:
-      item[property].indexOf(property) === -1
-        ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
+      item != null && item[property] && item[property].indexOf(property) !== -1
+        ? theme.typography.fontWeightMedium
+        : theme.typography.fontWeightRegular,
   };
 }
 
