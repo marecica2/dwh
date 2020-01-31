@@ -1,18 +1,42 @@
 version: '3.7'
 services:
-  migrator:
-    build:
-      dockerfile: migrator/Dockerfile
-      context: .
-  common:
-    build:
-      dockerfile: common/Dockerfile
-      context: .
-    depends_on:
-      - migrator
-  importer:
-    build:
-      dockerfile: importer/Dockerfile
-      context: .
-    depends_on:
-      - common
+  db:
+    image: postgres:10.3
+    container_name: db
+    volumes:
+      - ./.db/pg.conf:/etc/postgresql/postgresql.conf
+      - ./.db/seeds:/.db/seeds
+    ports:
+      - ${PG_PORT}:5432
+    environment:
+      POSTGRES_DB: $PG_DATABASE
+      POSTGRES_USER: $PG_USER
+      POSTGRES_PASSWORD: $PG_PASSWORD
+  db-test:
+    image: postgres:10.3
+    container_name: db-test
+    ports:
+      - ${PG_TEST_PORT}:5432
+    environment:
+      POSTGRES_DB: $PG_TEST_DATABASE
+      POSTGRES_USER: $PG_TEST_USER
+      POSTGRES_PASSWORD: $PG_TEST_PASSWORD
+  redis:
+    image: redis:4.0.5-alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "--appendonly", "yes"]
+#  react-app:
+#    build:
+#      dockerfile: Dockerfile
+#      context: ./react-app
+#    ports:
+#      - 3000:3000
+  proxy:
+    image: nginx:alpine
+    container_name: proxy
+    ports:
+      - 8081:80
+    volumes:
+      - ./.dev/nginx.local.conf:/etc/nginx/nginx.conf

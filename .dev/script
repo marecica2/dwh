@@ -2,8 +2,6 @@
 
 set -euo pipefail
 shopt -s expand_aliases
-source compose.spec
-
 
 if ! [[ -x "$(command -v docker-compose)" ]]; then
   echo "Please install Docker and then fire the script again"
@@ -11,12 +9,14 @@ if ! [[ -x "$(command -v docker-compose)" ]]; then
 fi
 
 DOCKER="docker"
-COMPOSE="docker-compose -f docker-compose.local.yml"
+COMPOSE="docker-compose"
 YARN_BIN="/usr/bin/yarn"
 
 
-export $(cat .env.local | xargs)
-printenv
+DWH_ENV=.env.local
+
+export $(cat $DWH_ENV | xargs)
+#printenv
 
 function quit() {
   echo >&2 "$@"
@@ -31,45 +31,26 @@ function success() {
   echo -e "\x1B[32m$1\x1B[0m"
 }
 
-function upService() {
-  ${COMPOSE} up -d --remove-orphans $@
-}
-
-function runService() {
-  ${COMPOSE} run --rm $1 sh -c "$2"
-}
-
-function upServiceWithDB() {
-  for service in $@; do
-    runService ${service} "
-        npm run db:create;
-        npm run db:migrate;
-        npm run db:init;
-        "
-    upService ${service}
-
-    # Making sure TM is started before starting any other service
-    if [[ ${service} == "nvt-tenant-management-api" ]]; then
-      sleep 10
-    fi
-  done
-}
-
 function appStart() {
-  true
+  info "== Starting App ... =="
+  info "== Starting infrastructure services =="
+  #mvn -ntp clean install -DskipTests
+  DWH_ENV=.env
+  env $(cat $DWH_ENV) $COMPOSE -f docker-compose.yml  -f docker-compose.local.yml up -d --remove-orphans --build
 }
 
 function appStop() {
   info "== Shutting down currently running Stack ... =="
-  env $(cat .env.local) docker-compose -f docker-compose.local.yml stop
+  DWH_ENV=.env
+  env $(cat $DWH_ENV) $COMPOSE -f docker-compose.local.yml -f docker-compose.yml stop
 }
 
 function stackStart() {
   appStop
-
   info "== Starting Stack ... =="
   info "== Starting infrastructure services =="
-  env $(cat .env.local) docker-compose -f docker-compose.local.yml  up -d
+  DWH_ENV=.env.local
+  env $(cat $DWH_ENV) $COMPOSE -f docker-compose.yml up -d --remove-orphans --build
 
   info "== Checking running services =="
   ${COMPOSE} ps

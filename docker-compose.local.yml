@@ -1,36 +1,38 @@
 version: '3.7'
 services:
-  db:
-    image: postgres:10.3
-    container_name: db
-    volumes:
-      - ./.db/pg.conf:/etc/postgresql/postgresql.conf
-      - ./.db/seeds:/.db/seeds
-    ports:
-      - ${PG_PORT}:5432
+  migrator:
+    build:
+      dockerfile: Dockerfile
+      context: ./migrator
     environment:
-      POSTGRES_DB: $PG_DATABASE
-      POSTGRES_USER: $PG_USER
-      POSTGRES_PASSWORD: $PG_PASSWORD
-  db-test:
-    image: postgres:10.3
-    container_name: db-test
-    ports:
-      - ${PG_TEST_PORT}:5432
+      PG_HOST: $PG_HOST
+      PG_PORT: $PG_PORT
+      PG_DATABASE: $PG_DATABASE
+      PG_USER: $PG_USER
+      PG_PASSWORD: $PG_PASSWORD
+      PG_TEST_HOST: $PG_TEST_HOST
+      PG_TEST_PORT: $PG_TEST_PORT
+      PG_TEST_DATABASE: $PG_TEST_DATABASE
+      PG_TEST_USER: $PG_TEST_USER
+      PG_TEST_PASSWORD: $PG_TEST_PASSWORD
+  importer:
+    build:
+      dockerfile: Dockerfile
+      context: ./importer
     environment:
-      POSTGRES_DB: $PG_TEST_DATABASE
-      POSTGRES_USER: $PG_TEST_USER
-      POSTGRES_PASSWORD: $PG_TEST_PASSWORD
-  redis:
-    image: redis:4.0.5-alpine
-    container_name: redis
-    ports:
-      - "6379:6379"
-    command: ["redis-server", "--appendonly", "yes"]
-  proxy:
-    image: nginx:alpine
-    container_name: proxy
-    ports:
-      - 8081:80
-    volumes:
-      - ./.nginx/nginx.conf:/etc/nginx/nginx.conf
+      REDIS_HOST: $REDIS_HOST
+      REDIS_PORT: $REDIS_PORT
+      PG_HOST: $PG_HOST
+      PG_PORT: $PG_PORT
+      PG_DATABASE: $PG_DATABASE
+      PG_USER: $PG_USER
+      PG_PASSWORD: $PG_PASSWORD
+      PG_TEST_HOST: $PG_TEST_HOST
+      PG_TEST_PORT: $PG_TEST_PORT
+      PG_TEST_DATABASE: $PG_TEST_DATABASE
+      PG_TEST_USER: $PG_TEST_USER
+      PG_TEST_PASSWORD: $PG_TEST_PASSWORD
+  react-app:
+    build:
+      dockerfile: Dockerfile
+      context: ./react-app
