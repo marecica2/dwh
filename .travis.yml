@@ -42,6 +42,7 @@ install:
   - java -Dspring.profiles.active=integration-test -jar ./migrator/target/application.jar
 script:
   - mvn -ntp install
+  - bash <(curl -s https://codecov.io/bash)
 #deploy:
 #  provider: script
 #  script: bash ./deploy.sh
