@@ -25,7 +25,9 @@ spring:
         jdbc.batch_size: 1000
         dialect: org.bmsource.dwh.common.db.CustomPostgreSQLDialect
     database-platform: org.bmsource.dwh.common.db.CustomPostgreSQLDialect
-
+  redis:
+    host: ${REDIS_HOST}
+    port: ${REDIS_PORT}
 ---
 
 spring:
