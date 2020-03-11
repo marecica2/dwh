@@ -44,14 +44,8 @@ services:
     image: redis:4.0.5-alpine
     container_name: redis
     ports:
-      - "6379:6379"
+      - 6379:6379
     command: ["redis-server", "--appendonly", "yes"]
-#  react-app:
-#    build:
-#      dockerfile: Dockerfile
-#      context: ./react-app
-#    ports:
-#      - 3000:3000
   proxy:
     image: nginx:alpine
     container_name: proxy
@@ -59,3 +53,10 @@ services:
       - 8081:80
     volumes:
       - ./.dev/nginx.local.conf:/etc/nginx/nginx.conf
+
+#  react-app:
+#    build:
+#      dockerfile: Dockerfile
+#      context: ./react-app
+#    ports:
+#      - 3000:3000
