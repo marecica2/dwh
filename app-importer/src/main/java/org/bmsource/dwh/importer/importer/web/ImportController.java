@@ -1,4 +1,4 @@
-package org.bmsource.dwh.importer.web;
+package org.bmsource.dwh.importer.importer.web;
 
 import org.apache.commons.io.IOUtils;
 import org.bmsource.dwh.common.filemanager.FileManager;
@@ -7,8 +7,8 @@ import org.bmsource.dwh.common.io.DataRow;
 import org.bmsource.dwh.common.io.reader.ExcelBeanReader;
 import org.bmsource.dwh.common.io.reader.ExcelReader;
 import org.bmsource.dwh.common.job.JobService;
-import org.bmsource.dwh.importer.MappingPreset;
-import org.bmsource.dwh.importer.MappingPresetRepository;
+import org.bmsource.dwh.importer.importer.MappingPreset;
+import org.bmsource.dwh.importer.importer.MappingPresetRepository;
 import org.bmsource.dwh.common.courier.RawFact;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

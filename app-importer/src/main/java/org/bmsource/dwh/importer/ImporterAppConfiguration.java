@@ -1,6 +1,7 @@
-package org.bmsource.dwh;
+package org.bmsource.dwh.importer;
 
 import org.bmsource.dwh.common.courier.CourierConfiguration;
+import org.bmsource.dwh.common.job.EnableImportJob;
 import org.bmsource.dwh.common.multitenancy.impl.concurrent.ContextAwarePoolExecutor;
 import org.bmsource.dwh.common.security.client.ClientSecurityConfig;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +16,7 @@ import java.util.concurrent.Executor;
     CourierConfiguration.class,
     ClientSecurityConfig.class
 })
+@EnableImportJob
 public class ImporterAppConfiguration {
 
     @Bean(name = "asyncExecutor")

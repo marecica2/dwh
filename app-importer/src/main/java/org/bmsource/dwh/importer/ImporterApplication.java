@@ -1,5 +1,7 @@
-package org.bmsource.dwh;
+package org.bmsource.dwh.importer;
 
+import org.bmsource.dwh.common.courier.CourierConfiguration;
+import org.bmsource.dwh.common.masterdata.MasterDataConfiguration;
 import org.bmsource.dwh.common.multitenancy.EnableMultitenancy;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,8 +17,16 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
     DataSourceAutoConfiguration.class,
     RedisRepositoriesAutoConfiguration.class,
 })
-@EnableJpaRepositories(basePackageClasses = ImporterApplication.class)
-@EntityScan(basePackageClasses = ImporterApplication.class)
+@EnableJpaRepositories(basePackageClasses = {
+    ImporterApplication.class,
+    CourierConfiguration.class,
+    MasterDataConfiguration.class
+})
+@EntityScan(basePackageClasses = {
+    ImporterApplication.class,
+    CourierConfiguration.class,
+    MasterDataConfiguration.class
+})
 @EnableAspectJAutoProxy
 @EnableAsync
 @EnableTransactionManagement

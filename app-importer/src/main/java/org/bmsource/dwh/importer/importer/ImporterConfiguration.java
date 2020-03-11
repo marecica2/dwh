@@ -1,4 +1,4 @@
-package org.bmsource.dwh.importer;
+package org.bmsource.dwh.importer.importer;
 
 import org.bmsource.dwh.common.courier.Fact;
 import org.bmsource.dwh.common.courier.FactRawRepository;
@@ -7,7 +7,7 @@ import org.bmsource.dwh.common.courier.RawFact;
 import org.bmsource.dwh.common.job.ImportJobConfiguration;
 import org.bmsource.dwh.common.job.ImportJobConfigurationBuilder;
 import org.bmsource.dwh.common.utils.StringUtils;
-import org.bmsource.dwh.masterdata.MasterDataService;
+import org.bmsource.dwh.importer.masterdata.MasterDataService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

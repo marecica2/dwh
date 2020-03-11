@@ -1,7 +1,8 @@
-package org.bmsource.dwh.importer.web;
+package org.bmsource.dwh.importer.importer.web;
 
 import org.apache.commons.io.FileUtils;
-import org.bmsource.dwh.ImporterApplication;
+import org.bmsource.dwh.importer.ImporterApplication;
+import org.bmsource.dwh.common.filemanager.TmpFileManager;
 import org.bmsource.dwh.common.multitenancy.TenantContext;
 import org.bmsource.dwh.common.utils.IntegrationTestUtils;
 import org.bmsource.dwh.common.utils.TestUtils;
@@ -45,7 +46,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 @ActiveProfiles("integration-test")
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {ImporterApplication.class})
+@ContextConfiguration(classes = { ImporterApplication.class, IntegrationTestUtils.class, TmpFileManager.class })
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ImportControllerIT {
     private static boolean printRest = false;

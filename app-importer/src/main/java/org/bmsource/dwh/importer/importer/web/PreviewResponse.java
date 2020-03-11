@@ -1,4 +1,4 @@
-package org.bmsource.dwh.importer.web;
+package org.bmsource.dwh.importer.importer.web;
 
 import org.bmsource.dwh.common.courier.RawFact;
 

@@ -1,4 +1,4 @@
-package org.bmsource.dwh.masterdata;
+package org.bmsource.dwh.importer.masterdata;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

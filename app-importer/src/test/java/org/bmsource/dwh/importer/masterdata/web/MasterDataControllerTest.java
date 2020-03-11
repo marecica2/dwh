@@ -1,7 +1,7 @@
-package org.bmsource.dwh.masterdata.web;
+package org.bmsource.dwh.importer.masterdata.web;
 
 import org.apache.commons.io.FileUtils;
-import org.bmsource.dwh.ImporterApplication;
+import org.bmsource.dwh.importer.ImporterApplication;
 import org.bmsource.dwh.common.multitenancy.TenantContext;
 import org.bmsource.dwh.common.utils.IntegrationTestUtils;
 import org.bmsource.dwh.common.utils.TestUtils;
@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 @SpringBootTest
 @ActiveProfiles({"integration-test"})
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {ImporterApplication.class})
+@ContextConfiguration(classes = { ImporterApplication.class})
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class MasterDataControllerTest {
     private static String tenant = "000000-00000-00001";

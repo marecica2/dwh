@@ -1,10 +1,10 @@
-package org.bmsource.dwh.importer.web;
+package org.bmsource.dwh.importer.importer.web;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import java.lang.reflect.Field;
+
 import java.util.*;
 import java.util.stream.Collectors;
 import javax.validation.constraints.NotNull;

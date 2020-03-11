@@ -1,4 +1,4 @@
-package org.bmsource.dwh.importer;
+package org.bmsource.dwh.importer.importer;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;

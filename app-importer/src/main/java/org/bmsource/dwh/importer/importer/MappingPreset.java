@@ -1,4 +1,4 @@
-package org.bmsource.dwh.importer;
+package org.bmsource.dwh.importer.importer;
 
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import org.hibernate.annotations.Type;
