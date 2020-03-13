@@ -18,6 +18,17 @@ public class BaseFact {
         return String.format("SELECT * FROM %s ORDER BY id ASC", tableName);
     }
 
+    String projectId;
+
+    public String getProjectId() {
+        // TODO
+        return "1";
+    }
+
+    public void setProjectId(String projectId) {
+        this.projectId = "1";
+    }
+
     public String insertSQL() {
         String columns = String.join(
             ", ",
