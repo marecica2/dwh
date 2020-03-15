@@ -1,0 +1,32 @@
+.login-wrapper {
+  height: 100%;
+}
+
+.mat-icon {
+  font-size: 32px;
+}
+
+.login-wrapper .example-form {
+  min-width: 100%;
+  width: 500px;
+}
+
+.login-wrapper .example-full-width, .login-wrapper .btn-block {
+  width: 100%;
+}
+
+.login-wrapper mat-card-header {
+  text-align: center;
+  width: 100%;
+  display: block;
+}
+
+
+.login-wrapper .mat-card {
+  padding: 50px;
+}
+
+
+.login-wrapper .mat-form-field-appearance-legacy .mat-form-field-infix {
+  padding: 0.8375em 0;
+}

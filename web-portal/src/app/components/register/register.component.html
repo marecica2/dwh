@@ -1,0 +1,41 @@
+<div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
+  <mat-card>
+    <mat-card-header>
+      <mat-title>
+        <h4 class="mat-display-1">DataCube</h4>
+      </mat-title>
+      <mat-icon aria-label="Lock" color="accent">lock</mat-icon>
+      <h4>Registration</h4>
+    </mat-card-header>
+
+    <form class="example-form">
+      <mat-card-content>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Username">
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Email">
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Password">
+        </mat-form-field>
+
+<!--        <mat-form-field class="example-full-width">-->
+<!--          <mat-label>Choose a role...</mat-label>-->
+<!--          <mat-select [(value)]="selected">-->
+<!--            <mat-option [value]="roles" *ngFor="let roles of Roles">{{roles}}-->
+<!--            </mat-option>-->
+<!--          </mat-select>-->
+<!--        </mat-form-field>-->
+
+      </mat-card-content>
+      <button mat-raised-button color="primary" class="btn-block">Register</button>
+    </form>
+
+    <br/>
+    <a mat-button routerLink="/login" color="primary" routerLinkActive="active">Already have account? Sign In</a>
+  </mat-card>
+</div>
+

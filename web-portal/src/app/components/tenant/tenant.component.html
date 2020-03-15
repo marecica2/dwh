@@ -1,0 +1,32 @@
+<div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
+  <mat-card>
+    <mat-card-header>
+      <mat-title>
+        <h4 class="mat-display-1">DataCube</h4>
+      </mat-title>
+      <mat-icon aria-label="Lock" color="accent">supervisor_account</mat-icon>
+      <h4>Select tenant</h4>
+    </mat-card-header>
+
+    <div *ngIf="false">
+      <mat-spinner style="margin:0 auto;"></mat-spinner>
+    </div>
+
+    <p>
+      You have no tenants assigned. Please contant administrator
+    </p>
+
+    <mat-form-field appearance="fill" style="width: 100%">
+      <mat-label>Select</mat-label>
+      <mat-select>
+        <mat-option value="option">Option</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <p>
+      <a mat-button routerLink="/login" color="primary" routerLinkActive="active">
+        Try to use different account.
+      </a>
+    </p>
+  </mat-card>
+</div>

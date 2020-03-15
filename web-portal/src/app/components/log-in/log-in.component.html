@@ -1,0 +1,52 @@
+<div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
+  <mat-card>
+    <mat-card-header>
+      <mat-title>
+        <h4 class="mat-display-1">DataCube</h4>
+      </mat-title>
+      <mat-icon aria-label="Lock" color="accent">lock</mat-icon>
+      <h4>Sign in</h4>
+    </mat-card-header>
+
+    <div *ngIf="isLoading">
+      <mat-spinner style="margin:0 auto;"></mat-spinner>
+    </div>
+
+    <form class="example-form" #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" *ngIf="!isLoading">
+      <mat-card-content>
+        <mat-form-field class="example-full-width">
+          <mat-label>Username</mat-label>
+          <input
+            matInput
+            name="username"
+            ngModel
+            required
+          >
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            name="password"
+            ngModel
+            type="password"
+            required
+            minlength="4"
+          >
+        </mat-form-field>
+      </mat-card-content>
+      <button
+        mat-raised-button
+        type="submit"
+        color="primary"
+        class="btn-block"
+        [disabled]="!authForm.valid"
+      >
+        Login
+      </button>
+    </form>
+
+    <br/>
+    <a mat-button routerLink="/register" color="primary" routerLinkActive="active">No account? Sign Up</a>
+  </mat-card>
+</div>
