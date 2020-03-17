@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { NgForm } from "@angular/forms";
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { LoginService, AuthResponse } from "./login.service";
+import { AuthService, AuthResponse } from "../../shared/auth.service";
 
 @Component({
   selector: 'app-log-in',
@@ -10,16 +10,20 @@ import { LoginService, AuthResponse } from "./login.service";
   styleUrls: ['./log-in.component.css']
 })
 export class LogInComponent implements OnInit {
+  user = {
+    username: "admin",
+    password: "admin",
+  };
   isLoading = false;
   error: any;
 
   constructor(
-    private loginService: LoginService,
+    private authService: AuthService,
     private snackBar: MatSnackBar,
     private router: Router) {
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
   }
 
   onSubmit(form: NgForm) {
@@ -34,8 +38,7 @@ export class LogInComponent implements OnInit {
 
     this.isLoading = true;
 
-    this.loginService.login(username, password).subscribe((tokenResponse: AuthResponse) => {
-      sessionStorage.setItem('token', JSON.stringify(tokenResponse));
+    this.authService.login(username, password).subscribe((tokenResponse: AuthResponse) => {
       this.isLoading = false;
       this.router.navigate(['/tenant'])
     }, errorMessage => {

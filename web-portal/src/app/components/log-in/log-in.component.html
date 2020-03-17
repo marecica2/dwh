@@ -12,14 +12,14 @@
       <mat-spinner style="margin:0 auto;"></mat-spinner>
     </div>
 
-    <form class="example-form" #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" *ngIf="!isLoading">
+    <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" *ngIf="!isLoading">
       <mat-card-content>
         <mat-form-field class="example-full-width">
           <mat-label>Username</mat-label>
           <input
             matInput
             name="username"
-            ngModel
+            [ngModel]="user.username"
             required
           >
         </mat-form-field>
@@ -28,7 +28,7 @@
           <input
             matInput
             name="password"
-            ngModel
+            [ngModel]="user.password"
             type="password"
             required
             minlength="4"

@@ -3,7 +3,8 @@ import { HttpClient } from "@angular/common/http";
 import { Observable, Subject } from "rxjs";
 import { catchError, tap } from "rxjs/operators";
 import { throwError } from "rxjs";
-import { User } from "../../user.model";
+import { User } from "./user.model";
+import { Router } from "@angular/router";
 
 const baseUrl = '/api/security/oauth/token';
 
@@ -20,10 +21,10 @@ export interface AuthResponse {
 @Injectable({
   providedIn: 'root'
 })
-export class LoginService {
+export class AuthService {
   user = new Subject<User>();
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
   }
 
   login(username: string, password: string): Observable<AuthResponse> {
@@ -43,8 +44,9 @@ export class LoginService {
   }
 
   private handleAuthentication(auth: AuthResponse) {
+    sessionStorage.setItem('token', JSON.stringify(auth));
     const user = new User('Admin', auth.jti, auth.access_token, new Date().getMilliseconds());
-    this.user.next(user)
+    this.user.next(user);
   }
 
   private handleError(error) {
@@ -59,4 +61,14 @@ export class LoginService {
     }
     return throwError(errorMessage);
   };
+
+  public isAuthenticated(): boolean {
+    return sessionStorage.getItem("token") !== null;
+  }
+
+  public logout() {
+    sessionStorage.removeItem('token');
+    this.user.next(null);
+    this.router.navigate(['/login']);
+  }
 }
