@@ -1,6 +1,9 @@
 package org.bmsource.dwh.security.model;
 
+import org.bmsource.dwh.common.portal.Tenant;
+
 import java.util.List;
+import java.util.Set;
 
 public class UserDto {
 
@@ -11,6 +14,7 @@ public class UserDto {
     private String password;
     private String email;
     private List<String> role;
+    private Set<Tenant> tenants;
 
     public long getId() {
         return id;
@@ -66,6 +70,14 @@ public class UserDto {
 
     public void setRole(List<String> role) {
         this.role = role;
+    }
+
+    public Set<Tenant> getTenants() {
+        return tenants;
+    }
+
+    public void setTenants(Set<Tenant> tenants) {
+        this.tenants = tenants;
     }
 
     @Override

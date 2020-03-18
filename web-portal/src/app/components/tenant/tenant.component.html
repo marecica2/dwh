@@ -16,12 +16,12 @@
       You have no tenants assigned. Please contant administrator
     </p>
 
-    <form class="example-form" #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" *ngIf="!isLoading">
+    <form class="example-form" *ngIf="!isLoading">
       <mat-form-field style="width: 100%">
         <mat-label>Select a tenant</mat-label>
-        <mat-select>
+        <mat-select (selectionChange)="onSubmit($event)">
           <mat-option *ngFor="let tenant of tenants" [value]="tenant.id">
-            {{tenant.name}}
+            {{tenant.schemaName}}
           </mat-option>
         </mat-select>
       </mat-form-field>

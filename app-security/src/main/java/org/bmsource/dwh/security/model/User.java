@@ -1,5 +1,7 @@
 package org.bmsource.dwh.security.model;
 
+import org.bmsource.dwh.common.portal.Tenant;
+
 import javax.persistence.*;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -9,7 +11,7 @@ import java.util.stream.Collectors;
 public class User {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String firstName;
     private String lastName;
@@ -19,8 +21,21 @@ public class User {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
-        joinColumns =  @JoinColumn(name ="user_id"),inverseJoinColumns= @JoinColumn(name="role_id"))
+        joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_tenants",
+        joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "tenant_id"))
+    private Set<Tenant> tenants;
+
+    public Set<Tenant> getTenants() {
+        return tenants;
+    }
+
+    public void setTenants(Set<Tenant> tenants) {
+        this.tenants = tenants;
+    }
 
     public Set<Role> getRoles() {
         return roles;
@@ -78,7 +93,7 @@ public class User {
         this.email = email;
     }
 
-    public UserDto toUserDto(){
+    public UserDto toUserDto() {
         UserDto userDto = new UserDto();
         userDto.setId(this.id);
         userDto.setEmail(this.email);
@@ -86,6 +101,7 @@ public class User {
         userDto.setLastName(this.lastName);
         userDto.setUsername(this.username);
         userDto.setRole(this.roles.stream().map(role -> role.getName().toString()).collect(Collectors.toList()));
+        userDto.setTenants(this.tenants);
         return userDto;
     }
 }

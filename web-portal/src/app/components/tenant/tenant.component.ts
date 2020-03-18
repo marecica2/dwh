@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from "@angular/forms";
-import { TenantService } from "./tenant.service";
 import { Subscription } from "rxjs";
+import { AuthService } from "../../shared/auth.service";
+import { TenantService } from "./tenant.service";
 
 @Component({
   selector: 'app-tenant',
@@ -13,13 +14,13 @@ export class TenantComponent implements OnInit, OnDestroy {
   tenants = [];
   private tenantSub: Subscription;
 
-  constructor(private tenantService: TenantService) {
+  constructor(private authService: AuthService, private tenantService: TenantService) {
   }
 
   ngOnInit(): void {
-    this.tenantSub = this.tenantService.getTenants().subscribe(tenants => {
-      console.log(tenants);
-      this.tenants = tenants;
+    this.tenantSub = this.authService.userInfo().subscribe(user => {
+      console.log(user);
+      this.tenants = user.tenants;
     });
   }
 
@@ -27,8 +28,10 @@ export class TenantComponent implements OnInit, OnDestroy {
     this.tenantSub.unsubscribe();
   }
 
-  onSubmit(form: NgForm) {
-    console.log(form.value);
+  onSubmit({ value }) {
+    const selectedTenant = this.tenants
+      .find(tenant => tenant.id === value);
+    this.tenantService.selectTenant(selectedTenant);
   }
 
 }

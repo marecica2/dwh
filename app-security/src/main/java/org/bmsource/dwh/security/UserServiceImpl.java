@@ -4,8 +4,8 @@ import org.bmsource.dwh.security.model.Role;
 import org.bmsource.dwh.security.model.RoleType;
 import org.bmsource.dwh.security.model.User;
 import org.bmsource.dwh.security.model.UserDto;
-import org.bmsource.dwh.security.repository.RoleDao;
-import org.bmsource.dwh.security.repository.UserDao;
+import org.bmsource.dwh.security.repository.RoleRepository;
+import org.bmsource.dwh.security.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +31,10 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Autowired
-    private UserDao userDao;
+    private UserRepository userRepository;
 
     @Autowired
-    private RoleDao roleDao;
+    private RoleRepository roleRepository;
 
     @Bean
     public PasswordEncoder encoder() {
@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-        User user = userDao.findByUsername(userId);
+        User user = userRepository.findByUsername(userId);
         if (user == null) {
             log.error("Invalid username or password.");
             throw new UsernameNotFoundException("Invalid username or password.");
@@ -62,28 +62,28 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     public List<UserDto> findAll() {
         List<UserDto> users = new ArrayList<>();
-        userDao.findAll().iterator().forEachRemaining(user -> users.add(user.toUserDto()));
+        userRepository.findAll().iterator().forEachRemaining(user -> users.add(user.toUserDto()));
         return users;
     }
 
     @Override
     public User findOne(long id) {
-        return userDao.findById(id).get();
+        return userRepository.findById(id).get();
     }
 
     @Override
     public void delete(long id) {
-        userDao.deleteById(id);
+        userRepository.deleteById(id);
     }
 
     @Override
     public UserDto save(UserDto userDto) {
-        User userWithDuplicateUsername = userDao.findByUsername(userDto.getUsername());
+        User userWithDuplicateUsername = userRepository.findByUsername(userDto.getUsername());
         if (userWithDuplicateUsername != null && userDto.getId() != userWithDuplicateUsername.getId()) {
             log.error(String.format("Duplicate username %", userDto.getUsername()));
             throw new RuntimeException("Duplicate username.");
         }
-        User userWithDuplicateEmail = userDao.findByEmail(userDto.getEmail());
+        User userWithDuplicateEmail = userRepository.findByEmail(userDto.getEmail());
         if (userWithDuplicateEmail != null && userDto.getId() != userWithDuplicateEmail.getId()) {
             log.error(String.format("Duplicate email %", userDto.getEmail()));
             throw new RuntimeException("Duplicate email.");
@@ -96,8 +96,8 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         user.setPassword(encoder().encode(userDto.getPassword()));
         List<RoleType> roleTypes = new ArrayList<>();
         userDto.getRole().forEach(role -> roleTypes.add(RoleType.valueOf(role)));
-        user.setRoles(roleDao.find(userDto.getRole()));
-        userDao.save(user);
+        user.setRoles(roleRepository.find(userDto.getRole()));
+        userRepository.save(user);
         return userDto;
     }
 }

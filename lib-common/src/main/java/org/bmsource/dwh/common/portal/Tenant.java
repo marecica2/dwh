@@ -1,46 +1,37 @@
 package org.bmsource.dwh.common.portal;
 
-import org.hibernate.annotations.GenericGenerator;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Table(name = "tenants")
 public class Tenant {
 
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String uuid;
+    @Column(name = "id")
+    private String id;
 
-    @Column(name = "schema_name")
+    @Column(name = "name")
     private String schemaName;
 
-    @Column(name = "tenant_name")
-    private String tenantName;
-
-    @Column(name = "created_at")
+    @Column(name = "created_on")
     private Date createdAt;
 
-    @Column(name = "updated_at")
+    @Column(name = "modified_on")
     private Date updatedAt;
 
     public Tenant() {}
 
-    public Tenant(String schemaName, String tenantName) {
+    public Tenant(String schemaName) {
         this.schemaName = schemaName;
-        this.tenantName = tenantName;
     }
 
-    public String getUuid() {
-        return uuid;
+    public String getId() {
+        return id;
     }
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getSchemaName() {
@@ -49,14 +40,6 @@ public class Tenant {
 
     public void setSchemaName(String schemaName) {
         this.schemaName = schemaName;
-    }
-
-    public String getTenantName() {
-        return tenantName;
-    }
-
-    public void setTenantName(String tenantName) {
-        this.tenantName = tenantName;
     }
 
     public Date getCreatedAt() {

@@ -2,7 +2,6 @@ package org.bmsource.dwh.common.appstate;
 
 import org.bmsource.dwh.common.portal.Tenant;
 import org.bmsource.dwh.common.portal.TenantRepository;
-import org.bmsource.dwh.common.portal.TenantRepositoryImpl;
 import org.bmsource.dwh.common.portal.ProjectRepository;
 import org.bmsource.dwh.common.redis.RedisConfiguration;
 import org.slf4j.Logger;
@@ -21,7 +20,7 @@ import java.util.List;
 
 @Configuration
 @ComponentScan
-@Import({RedisConfiguration.class, TenantRepositoryImpl.class, ProjectRepository.class})
+@Import({RedisConfiguration.class, TenantRepository.class, ProjectRepository.class})
 public class AppStateConfiguration {
 
     private Logger logger = LoggerFactory.getLogger(AppStateConfiguration.class);

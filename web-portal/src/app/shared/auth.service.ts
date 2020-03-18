@@ -6,7 +6,7 @@ import { throwError } from "rxjs";
 import { User } from "./user.model";
 import { Router } from "@angular/router";
 
-const baseUrl = '/api/security/oauth/token';
+const baseUrl = '/api/security';
 
 export interface AuthResponse {
   access_token: string,
@@ -36,10 +36,32 @@ export class AuthService {
       'Authorization': `Basic ${btoa('dwh-client:secret')}`,
     };
     return this.http
-      .post<AuthResponse>(baseUrl, formData, { headers })
+      .post<AuthResponse>(`${baseUrl}/oauth/token`, formData, { headers })
       .pipe(
         catchError(this.handleError.bind(this)),
         tap(this.handleAuthentication.bind(this)),
+      );
+  }
+
+  public isAuthenticated(): boolean {
+    return sessionStorage.getItem("token") !== null;
+  }
+
+  public token(): string {
+    return JSON.parse(sessionStorage.getItem("token")).access_token;
+  }
+
+  public logout() {
+    sessionStorage.removeItem('token');
+    this.user.next(null);
+    this.router.navigate(['/login']);
+  }
+
+  public userInfo(): Observable<any> {
+    return this.http
+      .get<any>(`${baseUrl}/me`)
+      .pipe(
+        catchError(this.handleError.bind(this)),
       );
   }
 
@@ -61,14 +83,4 @@ export class AuthService {
     }
     return throwError(errorMessage);
   };
-
-  public isAuthenticated(): boolean {
-    return sessionStorage.getItem("token") !== null;
-  }
-
-  public logout() {
-    sessionStorage.removeItem('token');
-    this.user.next(null);
-    this.router.navigate(['/login']);
-  }
 }
