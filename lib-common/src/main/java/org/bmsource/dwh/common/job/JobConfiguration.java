@@ -2,7 +2,6 @@ package org.bmsource.dwh.common.job;
 
 import org.bmsource.dwh.common.appstate.AppStateConfiguration;
 import org.bmsource.dwh.common.appstate.AppStateService;
-import org.bmsource.dwh.common.appstate.EnableImportEvents;
 import org.bmsource.dwh.common.filemanager.TmpFileManager;
 import org.bmsource.dwh.common.job.step.CleanUpTasklet;
 import org.bmsource.dwh.common.job.step.ZipErrorsTasklet;
@@ -36,11 +35,10 @@ import java.util.List;
 import java.util.Map;
 
 @Configuration
-@EnableImportEvents
 @EnableBatchProcessing
 @EnableAutoConfiguration
 @ComponentScan
-@Import({AppStateConfiguration.class, TmpFileManager.class })
+@Import({ TmpFileManager.class })
 public class JobConfiguration<RawFact, Fact> {
 
     private Logger logger = LoggerFactory.getLogger(JobConfiguration.class);

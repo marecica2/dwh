@@ -2,6 +2,8 @@ package org.bmsource.dwh.common.multitenancy;
 
 import org.apache.commons.io.FileUtils;
 import org.bmsource.dwh.common.multitenancy.app.TestApplication;
+import org.bmsource.dwh.common.multitenancy.impl.MultitenancyConfiguration;
+import org.bmsource.dwh.common.multitenancy.impl.MultitenantDataSource;
 import org.bmsource.dwh.common.utils.TestUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -31,7 +33,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {TestApplication.class})
+@ContextConfiguration(classes = {TestApplication.class, MultitenancyConfiguration.class })
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ActiveProfiles("integration-test-pg")
 public class MultitenancyIT {

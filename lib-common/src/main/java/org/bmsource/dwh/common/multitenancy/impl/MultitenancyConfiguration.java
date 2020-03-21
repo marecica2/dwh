@@ -3,17 +3,20 @@ package org.bmsource.dwh.common.multitenancy.impl;
 import org.bmsource.dwh.common.multitenancy.EnableMultitenancy;
 import org.bmsource.dwh.common.multitenancy.impl.concurrent.ContextAwarePoolExecutor;
 import org.bmsource.dwh.common.portal.Tenant;
-import org.bmsource.dwh.common.portal.TenantRepository;
+import org.bmsource.dwh.common.portal.TenantDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Primary;
-import org.springframework.orm.jpa.JpaVendorAdapter;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -37,13 +40,11 @@ public class MultitenancyConfiguration implements WebMvcConfigurer {
     private DataSourceProperties properties;
 
     @Autowired
-    private TenantRepository repository;
+    @Lazy
+    private TenantDao tenantDao;
 
-    // @Autowired
-    // JpaVendorAdapter jpaVendorAdapter;
-
-    // @Autowired
-    // JpaProperties props;
+    @Autowired
+    JpaProperties props;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -52,13 +53,13 @@ public class MultitenancyConfiguration implements WebMvcConfigurer {
 
     @Bean
     public MappedInterceptor repositoryRestResourcesInterceptor() {
-        return new MappedInterceptor(new String[]{"/**"}, tenantInterceptor);
+        return new MappedInterceptor(new String[]{ "/**" }, tenantInterceptor);
     }
 
-    @Bean
-    public DataSource dataSource() {
+    @Bean(name = "multitenantDatasource")
+    public DataSource multitenantDataSource() {
         Map<Object, Object> resolvedDataSources = new HashMap<>();
-        for (Tenant tenant : repository.findAll()) {
+        for (Tenant tenant : tenantDao.findAll()) {
             resolvedDataSources.put(tenant.getSchemaName(), createDatasource(tenant.getSchemaName()));
         }
 
@@ -67,6 +68,29 @@ public class MultitenancyConfiguration implements WebMvcConfigurer {
         dataSource.setTargetDataSources(resolvedDataSources);
         dataSource.afterPropertiesSet();
         return dataSource;
+    }
+
+    @Primary
+    @Bean
+    public JdbcTemplate jdbcTemplate(@Qualifier("multitenantDatasource") DataSource dataSource) {
+        return new JdbcTemplate(dataSource);
+    }
+
+//    @Bean
+//    public EntityManagerFactory entityManagerFactory() {
+//        LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
+//        emf.setDataSource(multitenantDataSource());
+//        emf.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
+//        emf.setPackagesToScan("org.bmsource.dwh.**");
+//        emf.setPersistenceUnitName("default");
+//        emf.getJpaPropertyMap().putAll(props.getProperties());
+//        emf.afterPropertiesSet();
+//        return emf.getObject();
+//    }
+
+    @Bean
+    public ThreadPoolTaskExecutor taskExecutor() {
+        return new ContextAwarePoolExecutor();
     }
 
     private DataSource createDatasource(String tenantSchema) {
@@ -79,24 +103,6 @@ public class MultitenancyConfiguration implements WebMvcConfigurer {
             dataSourceBuilder.type(properties.getType());
         }
         return dataSourceBuilder.build();
-    }
-
-//    @Primary
-//    @Bean(name = "multitenantEntityManagerFactory")
-//    public EntityManagerFactory entityManagerFactory() {
-//        LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
-//        emf.setDataSource(dataSource());
-//        emf.setJpaVendorAdapter(jpaVendorAdapter);
-//        emf.setPackagesToScan(resolvePackageName());
-//        emf.setPersistenceUnitName("default");
-//        emf.getJpaPropertyMap().putAll(props.getProperties());
-//        emf.afterPropertiesSet();
-//        return emf.getObject();
-//    }
-
-    @Bean
-    public ThreadPoolTaskExecutor taskExecutor() {
-        return new ContextAwarePoolExecutor();
     }
 
     private String resolvePackageName() {

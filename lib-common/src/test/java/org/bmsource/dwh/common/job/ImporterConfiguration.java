@@ -1,23 +1,28 @@
 package org.bmsource.dwh.common.job;
 
-import org.bmsource.dwh.common.appstate.AppStateConfiguration;
+import org.bmsource.dwh.common.appstate.AppStateService;
 import org.bmsource.dwh.common.filemanager.FileManager;
 import org.bmsource.dwh.common.filemanager.ResourceFileManager;
 import org.bmsource.dwh.common.utils.StringUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
 
 @Configuration
 @EnableImportJob
-@Import(AppStateConfiguration.class)
 public class ImporterConfiguration {
 
     @Bean
     @Primary
     FileManager fileManager() {
         return new ResourceFileManager();
+    }
+
+    @Bean
+    @Primary
+    AppStateService appStateService() {
+        return (tenant, project, stateType, state) -> {
+        };
     }
 
     @Bean

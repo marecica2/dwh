@@ -154,7 +154,7 @@ public class ImportControllerIT {
             .andExpect(MockMvcResultMatchers.jsonPath("$.sourceColumns.*", hasSize(38)))
             .andExpect(MockMvcResultMatchers.jsonPath("$.sourceColumns['Supplier Name']").value("UPS"))
             .andExpect(MockMvcResultMatchers.jsonPath("$.destinationColumns").exists())
-            .andExpect(MockMvcResultMatchers.jsonPath("$.destinationColumns.*", hasSize(31)))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.destinationColumns.*", hasSize(30)))
             .andExpect(MockMvcResultMatchers.jsonPath("$.destinationColumns.transactionId").exists())
             .andExpect(MockMvcResultMatchers.jsonPath("$.destinationColumns.transactionId.type").value("String"))
             .andExpect(MockMvcResultMatchers.jsonPath("$.destinationColumns.transactionId.label").value("Transaction " +

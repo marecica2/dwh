@@ -9,6 +9,6 @@ import org.springframework.context.annotation.Configuration;
  * No-op multi-tenancy configuration entry point
  */
 @Configuration
-@ComponentScan(basePackageClasses = {PortalConfiguration.class, MultitenancyConfiguration.class})
+@ComponentScan(basePackageClasses = {PortalConfiguration.class, Multitenancy.class})
 public class Multitenancy {
 }

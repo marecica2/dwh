@@ -1,15 +1,14 @@
 server:
-  port: 3001
+  port: 3000
   servlet:
-    context-path: /api/importer
+    context-path: /api/portal
 spring:
   application:
-    name: importer
+    name: portal
   data:
     redis.repositories.enabled: false
   datasource:
     url: jdbc:postgresql://${PG_HOST}:${PG_PORT}/${PG_DATABASE}?reWriteBatchedInserts=true
-    jdbcUrl: jdbc:postgresql://${PG_HOST}:${PG_PORT}/${PG_DATABASE}?reWriteBatchedInserts=true
     username: ${PG_USER}
     password: ${PG_PASSWORD}
     driver-class-name: org.postgresql.Driver
@@ -39,28 +38,3 @@ spring:
   batch:
     job:
       enabled: false
-
----
-
-spring:
-  profiles: unit-test
-  datasource:
-    url: jdbc:h2:mem:\"000000-00000-00001\";MODE=PostgreSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false
-    jdbcUrl: jdbc:h2:mem:\"000000-00000-00001\";MODE=PostgreSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false
-    driver-class-name: org.h2.Driver
-  jpa:
-    database-platform: org.hibernate.dialect.PostgreSQL95Dialect
-    hibernate:
-      ddl-auto: create-drop
-
----
-
-spring:
-  profiles: integration-test
-  datasource:
-    url: jdbc:postgresql://${PG_TEST_HOST}:${PG_TEST_PORT}/${PG_TEST_DATABASE}?reWriteBatchedInserts=true
-    username: ${PG_TEST_USER}
-    password: ${PG_TEST_PASSWORD}
-    hikari:
-      minimum-idle: 2
-      maximum-pool-size: 10

@@ -16,8 +16,9 @@
         <module>app-importer</module>
         <module>app-migrator</module>
         <module>app-olap</module>
-        <module>app-gateway</module>
+        <module>app-portal</module>
         <module>app-security</module>
+        <module>lib-courier-services</module>
     </modules>
 
     <parent>

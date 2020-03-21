@@ -1,14 +1,12 @@
 package org.bmsource.dwh.common.job;
 
 import org.bmsource.dwh.common.BaseFact;
-import org.bmsource.dwh.common.multitenancy.EnableMultitenancy;
 import org.bmsource.dwh.common.utils.TestUtils;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
