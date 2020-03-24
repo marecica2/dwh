@@ -1,4 +1,4 @@
-package org.bmsource.dwh.common.io.reader;
+package org.bmsource.dwh.common.excel.reader;
 
 import java.io.InputStream;
 import java.util.ArrayList;

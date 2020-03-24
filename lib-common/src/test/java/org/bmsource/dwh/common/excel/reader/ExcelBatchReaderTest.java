@@ -1,4 +1,4 @@
-package org.bmsource.dwh.common.io.reader;
+package org.bmsource.dwh.common.excel.reader;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;

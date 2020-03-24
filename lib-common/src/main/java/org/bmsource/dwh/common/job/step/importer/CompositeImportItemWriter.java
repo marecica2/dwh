@@ -2,7 +2,7 @@ package org.bmsource.dwh.common.job.step.importer;
 
 import org.bmsource.dwh.common.BaseFact;
 import org.bmsource.dwh.common.job.JobConstants;
-import org.bmsource.dwh.common.io.DataRow;
+import org.bmsource.dwh.common.excel.DataRow;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.configuration.annotation.StepScope;

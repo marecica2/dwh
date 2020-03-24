@@ -2,7 +2,7 @@ package org.bmsource.dwh.common.job.step.importer;
 
 import org.bmsource.dwh.common.BaseFact;
 import org.bmsource.dwh.common.appstate.client.AppStateService;
-import org.bmsource.dwh.common.io.DataRow;
+import org.bmsource.dwh.common.excel.DataRow;
 import org.bmsource.dwh.common.job.ImportJobConfiguration;
 import org.bmsource.dwh.common.job.JobConstants;
 import org.bmsource.dwh.common.multitenancy.impl.concurrent.ContextAwarePoolExecutor;

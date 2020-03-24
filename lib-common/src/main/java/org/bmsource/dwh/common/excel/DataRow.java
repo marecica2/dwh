@@ -1,6 +1,6 @@
-package org.bmsource.dwh.common.io;
+package org.bmsource.dwh.common.excel;
 
-import org.bmsource.dwh.common.io.reader.ExcelRowValidator;
+import org.bmsource.dwh.common.excel.reader.ExcelRowValidator;
 
 import javax.validation.constraints.NotNull;
 import java.lang.reflect.Field;

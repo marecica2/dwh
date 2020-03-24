@@ -1,9 +1,8 @@
 package org.bmsource.dwh.common.utils;
 
 import org.apache.commons.io.FileUtils;
-import org.bmsource.dwh.common.filemanager.TmpFileManager;
-import org.bmsource.dwh.common.io.reader.ExcelReaderHandler;
-import org.bmsource.dwh.common.io.reader.GenericExcelReader;
+import org.bmsource.dwh.common.excel.reader.ExcelReaderHandler;
+import org.bmsource.dwh.common.excel.reader.GenericExcelReader;
 import org.bmsource.dwh.common.masterdata.MasterDataNormalizer;
 import org.bmsource.dwh.common.masterdata.model.RateCard;
 import org.bmsource.dwh.common.masterdata.model.ServiceTypeMapping;
@@ -13,11 +12,9 @@ import org.bmsource.dwh.common.masterdata.repository.ServiceTypeMappingRepositor
 import org.bmsource.dwh.common.masterdata.repository.TaxonomyRepository;
 import org.bmsource.dwh.common.multitenancy.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisOperations;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Component;

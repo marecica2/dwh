@@ -1,7 +1,7 @@
 package org.bmsource.dwh.importer.masterdata;
 
-import org.bmsource.dwh.common.io.reader.ExcelReaderHandler;
-import org.bmsource.dwh.common.io.reader.GenericExcelReader;
+import org.bmsource.dwh.common.excel.reader.ExcelReaderHandler;
+import org.bmsource.dwh.common.excel.reader.GenericExcelReader;
 import org.bmsource.dwh.common.masterdata.MasterDataNormalizer;
 import org.bmsource.dwh.common.masterdata.model.RateCard;
 import org.bmsource.dwh.common.masterdata.model.ServiceTypeMapping;

@@ -1,10 +1,10 @@
-package org.bmsource.dwh.common.io.writer;
+package org.bmsource.dwh.common.excel.writer;
 
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
-import org.bmsource.dwh.common.io.DataRow;
+import org.bmsource.dwh.common.excel.DataRow;
 
 import java.io.IOException;
 import java.io.OutputStream;

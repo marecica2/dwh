@@ -1,4 +1,4 @@
-package org.bmsource.dwh.common.io.reader;
+package org.bmsource.dwh.common.excel.reader;
 
 import com.monitorjbl.xlsx.StreamingReader;
 import org.apache.poi.ss.usermodel.Cell;

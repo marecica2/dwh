@@ -1,11 +1,11 @@
-package org.bmsource.dwh.common.io.writer;
+package org.bmsource.dwh.common.excel.writer;
 
 import org.apache.commons.io.FileUtils;
-import org.bmsource.dwh.common.io.DataRow;
+import org.bmsource.dwh.common.excel.DataRow;
 import org.bmsource.dwh.common.filemanager.FileManager;
 import org.bmsource.dwh.common.filemanager.ResourceFileManager;
-import org.bmsource.dwh.common.io.reader.ExcelReader;
-import org.bmsource.dwh.common.io.reader.ExcelRowValidator;
+import org.bmsource.dwh.common.excel.reader.ExcelReader;
+import org.bmsource.dwh.common.excel.reader.ExcelRowValidator;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 

@@ -1,6 +1,6 @@
-package org.bmsource.dwh.common.io.writer;
+package org.bmsource.dwh.common.excel.writer;
 
-import org.bmsource.dwh.common.io.DataRow;
+import org.bmsource.dwh.common.excel.DataRow;
 
 import java.io.IOException;
 import java.util.List;
