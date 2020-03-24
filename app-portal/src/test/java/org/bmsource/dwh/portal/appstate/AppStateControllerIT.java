@@ -6,24 +6,24 @@ import org.bmsource.dwh.common.appstate.client.RedisAppStateService;
 import org.bmsource.dwh.common.utils.IntegrationTestUtils;
 import org.bmsource.dwh.common.utils.TestUtils;
 import org.bmsource.dwh.portal.PortalApplication;
+import org.junit.After;
 import org.junit.Before;
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @ActiveProfiles("integration-test")
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@ExtendWith(SpringExtension.class)
+@RunWith(SpringRunner.class)
 @SpringBootTest(classes = { PortalApplication.class, IntegrationTestUtils.class }, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 @EnableAppState
@@ -35,16 +35,12 @@ public class AppStateControllerIT {
     @Autowired
     IntegrationTestUtils testUtils;
 
-    @BeforeAll
-    public void setup() {
-    }
-
-    @AfterEach
+    @After
     public void afterEach() {
         testUtils.flushRedis();
     }
 
-    @BeforeEach
+    @Before
     public void beforeEach() {
         testUtils.flushRedis();
     }

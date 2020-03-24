@@ -7,14 +7,13 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
-import java.io.IOException;
 import java.util.*;
 
 @Service
 public class SseEmitterServiceImpl implements SseEmitterService {
     private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
-    private static final Map<String, List<SseEmitter>> emittersMap = Collections.synchronizedMap(new HashMap<>());
+    static final Map<String, List<SseEmitter>> emittersMap = Collections.synchronizedMap(new HashMap<>());
 
     @Scheduled(fixedRate = 50000)
     public void heartbeat() {
