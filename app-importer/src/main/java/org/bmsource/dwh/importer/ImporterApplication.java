@@ -1,6 +1,6 @@
 package org.bmsource.dwh.importer;
 
-import org.bmsource.dwh.common.appstate.EnableImportEvents;
+import org.bmsource.dwh.common.appstate.client.EnableAppState;
 import org.bmsource.dwh.common.courier.CourierConfiguration;
 import org.bmsource.dwh.common.masterdata.MasterDataConfiguration;
 import org.bmsource.dwh.common.multitenancy.EnableMultitenancy;
@@ -40,7 +40,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableAspectJAutoProxy
 @EnableAsync
 @EnableTransactionManagement
-@EnableImportEvents
+@EnableAppState
 @EnableMultitenancy(ImporterApplication.class)
 public class ImporterApplication {
     public static void main(String[] args) {

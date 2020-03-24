@@ -1,4 +1,4 @@
-package org.bmsource.dwh.common.appstate;
+package org.bmsource.dwh.common.appstate.client;
 
 import org.springframework.context.annotation.Import;
 
@@ -9,6 +9,6 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-@Import(AppStateConfiguration.class)
-public @interface EnableImportEvents {
+@Import(RedisAppStateService.class)
+public @interface EnableAppState {
 }

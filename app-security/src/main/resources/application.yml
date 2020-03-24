@@ -1,5 +1,5 @@
 server:
-  port: 3003
+  port: ${APP_SECURITY_PORT}
   servlet:
     context-path: /api/security
 spring:

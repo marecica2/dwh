@@ -15,6 +15,9 @@ import org.bmsource.dwh.common.multitenancy.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.redis.core.RedisCallback;
+import org.springframework.data.redis.core.RedisOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Component;
@@ -45,14 +48,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional
 public class IntegrationTestUtils {
 
-    @Autowired
+    @Autowired(required = false)
     TaxonomyRepository taxonomyRepository;
 
-    @Autowired
+    @Autowired(required = false)
     ServiceTypeMappingRepository serviceTypeMappingRepository;
 
-    @Autowired
+    @Autowired(required = false)
     RateCardRepository rateCardRepository;
+
+    @Autowired(required = false)
+    RedisOperations<String, String> operations;
 
     public void hasTaxonomy(String... optFileName) throws Exception {
         File file = getResource("taxonomy.xlsx", optFileName);
@@ -70,6 +76,13 @@ public class IntegrationTestUtils {
         File file = getResource("standard_rate_card_small.xlsx", optFileName);
         importExcel(FileUtils.openInputStream(file), rateCardRepository, RateCard.class,
             MasterDataNormalizer.normalizeRateCards, rateCardRepository::delete);
+    }
+
+    public void flushRedis() {
+        operations.execute((RedisCallback<Void>) connection -> {
+            connection.serverCommands().flushAll();
+            return null;
+        });
     }
 
     private <Type, Repository extends JpaRepository<Type, ?>> void importExcel(

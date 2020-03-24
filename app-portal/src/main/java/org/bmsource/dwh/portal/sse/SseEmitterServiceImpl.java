@@ -1,4 +1,4 @@
-package org.bmsource.dwh.common.appstate.pushnotification;
+package org.bmsource.dwh.portal.sse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,10 +7,11 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
+import java.io.IOException;
 import java.util.*;
 
 @Service
-public class NotificationServiceImpl implements NotificationService {
+public class SseEmitterServiceImpl implements SseEmitterService {
     private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
     private static final Map<String, List<SseEmitter>> emittersMap = Collections.synchronizedMap(new HashMap<>());
@@ -30,10 +31,10 @@ public class NotificationServiceImpl implements NotificationService {
                 }
             }
         }
-        Iterator<Map.Entry<String,List<SseEmitter>>> iter = emittersMap.entrySet().iterator();
+        Iterator<Map.Entry<String, List<SseEmitter>>> iter = emittersMap.entrySet().iterator();
         while (iter.hasNext()) {
-            Map.Entry<String,List<SseEmitter>> entry = iter.next();
-            if(entry.getValue().size() == 0){
+            Map.Entry<String, List<SseEmitter>> entry = iter.next();
+            if (entry.getValue().size() == 0) {
                 iter.remove();
             }
         }
@@ -67,7 +68,10 @@ public class NotificationServiceImpl implements NotificationService {
             while (iterator.hasNext()) {
                 SseEmitter emitter = iterator.next();
                 try {
-                    emitter.send(message, MediaType.APPLICATION_JSON);
+                    emitter.send(
+                        SseEmitter.event().name("appState")
+                            .data(message, MediaType.APPLICATION_JSON)
+                            .id("appState"));
                 } catch (Exception e) {
                     logger.trace("Removing closed sse connection " + emitter);
                     emitter.complete();

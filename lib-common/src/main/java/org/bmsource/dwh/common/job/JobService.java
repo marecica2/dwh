@@ -1,6 +1,6 @@
 package org.bmsource.dwh.common.job;
 
-import org.bmsource.dwh.common.appstate.AppStateService;
+import org.bmsource.dwh.common.appstate.client.AppStateService;
 import org.codehaus.jettison.json.JSONObject;
 import org.springframework.batch.core.*;
 import org.springframework.batch.core.explore.JobExplorer;

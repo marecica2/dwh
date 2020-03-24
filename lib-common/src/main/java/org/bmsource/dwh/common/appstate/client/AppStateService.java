@@ -1,4 +1,4 @@
-package org.bmsource.dwh.common.appstate;
+package org.bmsource.dwh.common.appstate.client;
 
 import java.util.Map;
 

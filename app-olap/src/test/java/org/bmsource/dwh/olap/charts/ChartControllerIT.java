@@ -1,6 +1,7 @@
 package org.bmsource.dwh.olap.charts;
 
 import org.bmsource.dwh.common.multitenancy.TenantContext;
+import org.bmsource.dwh.common.utils.IntegrationTestUtils;
 import org.bmsource.dwh.olap.OlapApplication;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,7 +35,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 @ActiveProfiles("integration-test")
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {OlapApplication.class})
+@ContextConfiguration(classes = {OlapApplication.class, IntegrationTestUtils.class })
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ChartControllerIT {
     private boolean printRest = false;
@@ -50,7 +51,7 @@ public class ChartControllerIT {
     JdbcTemplate template;
 
     @Autowired
-    RedisOperations<String, String> operations;
+    IntegrationTestUtils testUtils;
 
     @BeforeEach
     public void setup() {
@@ -59,7 +60,7 @@ public class ChartControllerIT {
 
     @AfterEach
     public void afterEach() {
-        flushRedis();
+        testUtils.flushRedis();
     }
 
     @Test
@@ -125,10 +126,4 @@ public class ChartControllerIT {
         return result -> { };
     }
 
-    private void flushRedis() {
-        operations.execute((RedisCallback<Void>) connection -> {
-            connection.serverCommands().flushAll();
-            return null;
-        });
-    }
 }

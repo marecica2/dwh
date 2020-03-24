@@ -1,5 +1,5 @@
 server:
-  port: 3001
+  port: ${APP_IMPORTER_PORT}
   servlet:
     context-path: /api/importer
 spring:

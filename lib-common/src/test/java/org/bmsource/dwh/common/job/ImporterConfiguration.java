@@ -1,6 +1,6 @@
 package org.bmsource.dwh.common.job;
 
-import org.bmsource.dwh.common.appstate.AppStateService;
+import org.bmsource.dwh.common.appstate.client.AppStateService;
 import org.bmsource.dwh.common.filemanager.FileManager;
 import org.bmsource.dwh.common.filemanager.ResourceFileManager;
 import org.bmsource.dwh.common.utils.StringUtils;

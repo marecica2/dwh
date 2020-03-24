@@ -1,5 +1,5 @@
 server:
-  port: 3002
+  port: ${APP_OLAP_PORT}
   servlet:
     context-path: /api/olap
 spring:

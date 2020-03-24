@@ -1,6 +1,6 @@
-package org.bmsource.dwh.common.appstate;
+package org.bmsource.dwh.portal.appstate;
 
-import org.bmsource.dwh.common.appstate.pushnotification.NotificationService;
+import org.bmsource.dwh.portal.sse.SseEmitterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,16 +14,18 @@ import javax.websocket.server.PathParam;
 public class AppStateController {
 
     @Autowired
-    NotificationService notificationService;
+    SseEmitterService sse;
 
     @GetMapping("status")
     public SseEmitter streamEvents(@PathParam("tenant") String tenant,
                                    @PathParam("projectId") String projectId) {
-        return notificationService.initSseEmitters(tenant, projectId);
+        return sse.initSseEmitters(tenant, projectId);
     }
 
     @ExceptionHandler(value = AsyncRequestTimeoutException.class)
     public String asyncTimeout(AsyncRequestTimeoutException e) {
-        return null; // ignoring SSE timeout by intention;
+        return null;
     }
+
+
 }

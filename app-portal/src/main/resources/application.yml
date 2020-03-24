@@ -1,5 +1,5 @@
 server:
-  port: 3000
+  port: ${APP_PORTAL_PORT}
   servlet:
     context-path: /api/portal
 spring:
