@@ -1,3 +1,7 @@
+server:
+  port: ${APP_MIGRATOR_PORT}
+  servlet:
+    context-path: /api/migrator
 spring:
   application:
     name: migrator
