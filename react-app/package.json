@@ -22,7 +22,7 @@
     "bluebird": "^3.7.1",
     "classnames": "^2.2.6",
     "js-file-download": "^0.4.8",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "query-string": "^6.8.3",
     "ramda": "^0.26.1",
     "ramda-adjunct": "^2.25.0",
